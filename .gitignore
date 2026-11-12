@@ -1,0 +1,30 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Spark checkpoints & temporary folders
+checkpoint/
+checkpoints/
+metastore_db/
+derby.log
+.spark-staging*/
+spark-warehouse/
+*.dump
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

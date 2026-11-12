@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="5">
-    <title>DogeCoin x Solana Website int</title>
+    <title>DogeCoin x Solana Real-Time Streaming Dashboard</title>
     <style>
         :root {
             --bg-page: #82caff;
@@ -42,6 +42,7 @@
             border-bottom: 2px solid var(--accent-gold);
             padding-bottom: 14px;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .title-group h1 {
@@ -59,6 +60,12 @@
             font-weight: 500;
         }
 
+        .header-badges {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .tag {
             background-color: var(--surface-card);
             border: 1px solid var(--border-highlight);
@@ -68,6 +75,20 @@
             font-size: 0.8rem;
             font-weight: 600;
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        .tag-count {
+            background-color: #243342;
+            color: #ffffff;
+            border: 1px solid #14202c;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-count.complete {
+            background-color: #2e6914;
+            border-color: #22510d;
         }
 
         .dashboard-container {
@@ -106,10 +127,16 @@
             font-weight: 700;
         }
 
-        .pill-badge {
+        .card-header-stats {
             margin-left: auto;
-            font-size: 0.72rem;
-            padding: 3px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pill-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
             border-radius: 4px;
             font-family: "SFMono-Regular", Consolas, monospace;
             background: #f1f8eb;
@@ -118,8 +145,14 @@
             font-weight: 600;
         }
 
+        .pill-badge-count {
+            background: #eef5fb;
+            color: #1a5682;
+            border: 1px solid #b7d7ee;
+        }
+
         .table-container {
-            max-height: 260px;
+            max-height: 380px;
             overflow-y: auto;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -180,7 +213,14 @@
             <h1>🐕 DogeCoin x Solana Very Live Fast Streaming Pipeline ⚡</h1>
             <p>API &rarr; Apache Kafka &rarr; Spark Structured Streaming &rarr; Apache Cassandra</p>
         </div>
-        <div class="tag">CSS182-02 AM1 &bull; Floranda, Santos (Group 5)</div>
+        <div class="header-badges">
+            <div class="tag tag-count {% if total_count >= 100 %}complete{% endif %}">
+                <span>DATABASE SAMPLE:</span>
+                <strong>{{ total_count }} / 100 ROWS</strong>
+                <span>{% if total_count >= 100 %}✅ (Target Reached){% else %}⏳ (Collecting...){% endif %}</span>
+            </div>
+            <div class="tag">CSS182-02 AM1 &bull; Floranda, Santos (Group 5)</div>
+        </div>
     </div>
 
     <div class="dashboard-container">
@@ -189,12 +229,16 @@
             <div class="card-header">
                 <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" alt="DOGE">
                 <h2>Dogecoin LIVE DATA</h2>
-                <span class="pill-badge">TOPIC: crypto-dogecoin</span>
+                <div class="card-header-stats">
+                    <span class="pill-badge pill-badge-count">Collected: <strong>{{ doge_count }}</strong> / 50</span>
+                    <span class="pill-badge">TOPIC: crypto-dogecoin</span>
+                </div>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Timestamp</th>
                             <th>Price (USD)</th>
                             <th>24h Volume</th>
@@ -205,6 +249,7 @@
                         {% if doge %}
                             {% for r in doge %}
                             <tr>
+                                <td style="color: var(--text-muted); font-size: 0.78rem;">{{ loop.index }}</td>
                                 <td>{{ r.timestamp }}</td>
                                 <td>${{ "%.4f"|format(r.price_usd) }}</td>
                                 <td>${{ "{:,.0f}".format(r.volume_24h) }}</td>
@@ -214,7 +259,7 @@
                             </tr>
                             {% endfor %}
                         {% else %}
-                            <tr><td colspan="4" class="empty-row">Polling micro-batches from Cassandra...</td></tr>
+                            <tr><td colspan="5" class="empty-row">Polling micro-batches from Cassandra...</td></tr>
                         {% endif %}
                     </tbody>
                 </table>
@@ -226,12 +271,16 @@
             <div class="card-header">
                 <img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL">
                 <h2>Solana LIVE DATA</h2>
-                <span class="pill-badge">TOPIC: crypto-solana</span>
+                <div class="card-header-stats">
+                    <span class="pill-badge pill-badge-count">Collected: <strong>{{ sol_count }}</strong> / 50</span>
+                    <span class="pill-badge">TOPIC: crypto-solana</span>
+                </div>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Timestamp</th>
                             <th>Price (USD)</th>
                             <th>24h Volume</th>
@@ -242,6 +291,7 @@
                         {% if sol %}
                             {% for r in sol %}
                             <tr>
+                                <td style="color: var(--text-muted); font-size: 0.78rem;">{{ loop.index }}</td>
                                 <td>{{ r.timestamp }}</td>
                                 <td>${{ "%.2f"|format(r.price_usd) }}</td>
                                 <td>${{ "{:,.0f}".format(r.volume_24h) }}</td>
@@ -251,7 +301,7 @@
                             </tr>
                             {% endfor %}
                         {% else %}
-                            <tr><td colspan="4" class="empty-row">Polling micro-batches from Cassandra...</td></tr>
+                            <tr><td colspan="5" class="empty-row">Polling micro-batches from Cassandra...</td></tr>
                         {% endif %}
                     </tbody>
                 </table>
