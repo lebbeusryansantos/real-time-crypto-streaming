@@ -2,7 +2,7 @@
 
 An end-to-end real-time data engineering and streaming analytics pipeline that ingests live **Dogecoin (`DOGE`)** and **Solana (`SOL`)** market metrics from the CoinGecko API, processes micro-batches via Apache Kafka and Apache Spark Structured Streaming, persists records in Apache Cassandra, and serves a live monitoring dashboard with Flask.
 
-Originally developed for **Data Science 2** and extended for **Data Science 3 (1-Hour-Ahead Spot Price Forecasting)** at Mapúa University.
+Originally developed for specializations **Data Science 2** and extended for **Data Science 3 (1-Hour-Ahead Spot Price Forecasting)** at Mapúa University.
 
 ---
 
@@ -180,5 +180,5 @@ docker compose down
 
 ## Team & Acknowledgments
 
-- **Data Science 3 (Group 8 - AM3):** Lebbeus Ryan V. Santos, Bauza, Castillo
-- **Data Science 2 (Group 5 - AM1):** Floranda, Santos
+- **Data Science 3 (Group 8 - AM3):** Lebbeus Ryan V. Santos, Xyrelle John M. Bauza, Carl Rohan M. Castillo
+- **Data Science 2 (Group 5 - AM1):** Lebbeus Ryan V. Santos, Ramuell Franz C. Floranda
